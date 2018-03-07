@@ -12,7 +12,8 @@ module.exports = app => {
     '/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
-      console.log('and we are back!' + ' ' + res.json());
+      console.log('google is back');
+      res.redirect('/');
     }
   );
 
@@ -23,6 +24,16 @@ module.exports = app => {
     passport.authenticate('facebook'),
     (req, res) => {
       console.log('facebook is back');
+      res.redirect('/');
     }
   );
+
+  app.get('/api/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
+
+  app.get('/api/current_user', (req, res) => {
+    res.send(req.user);
+  });
 };
